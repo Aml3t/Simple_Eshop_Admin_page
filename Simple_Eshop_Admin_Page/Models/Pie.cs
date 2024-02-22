@@ -33,5 +33,7 @@ namespace Simple_Eshop_Admin_Page.Models
 
         public Category? Category { get; set; }
 
+        public ICollection<Ingredient>? Ingredients { get; set; }
+
     }
 }
