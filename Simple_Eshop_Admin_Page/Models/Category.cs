@@ -10,5 +10,6 @@
 
         public DateTime? DateAdded { get; set; }
 
+        public ICollection<Pie>? Pies { get; set; }
     }
 }

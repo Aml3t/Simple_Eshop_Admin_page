@@ -29,5 +29,9 @@ namespace Simple_Eshop_Admin_Page.Models
 
         public bool InStock { get; set; }
 
+        public int CategoryId { get; set; }
+
+        public Category? Category { get; set; }
+
     }
 }
