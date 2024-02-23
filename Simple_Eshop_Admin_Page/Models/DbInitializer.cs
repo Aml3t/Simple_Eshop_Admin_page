@@ -61,11 +61,11 @@
                 context.Orders.AddRange(
                     new Order()
                     {
-                        FirstName = "Gill",
-                        LastName = "Cleeren",
+                        FirstName = "Test",
+                        LastName = "Tester",
                         AddressLine1 = "Some street 123",
-                        City = "Brussels",
-                        Country = "Belgium",
+                        City = "North Pole",
+                        Country = "North Pole",
                         Email = "test@test.com",
                         PhoneNumber = "555-123456",
                         State = "NA",
