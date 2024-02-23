@@ -23,6 +23,11 @@ namespace Simple_Eshop_Admin_Page.Models
             modelBuilder.Entity<Pie>().ToTable("Pies");
             modelBuilder.Entity<Order>().ToTable("Orders");
             modelBuilder.Entity<OrderDetail>().ToTable("OrderDetails");
+
+            //configuration using Fluent API
+            modelBuilder.Entity<Category>()
+                .Property(b => b.Name)
+                .IsRequired();
         }
     }
 }
