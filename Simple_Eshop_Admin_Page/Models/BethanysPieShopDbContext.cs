@@ -19,6 +19,9 @@ namespace Simple_Eshop_Admin_Page.Models
         //This is how we use different name for our Objects to the database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //configurations
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof
+                (BethanysPieShopDbContext).Assembly);
             modelBuilder.Entity<Category>().ToTable("Categories");
             modelBuilder.Entity<Pie>().ToTable("Pies");
             modelBuilder.Entity<Order>().ToTable("Orders");
