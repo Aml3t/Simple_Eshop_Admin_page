@@ -16,7 +16,7 @@ namespace Simple_Eshop_Admin_Page.Models
         public DbSet<OrderDetail> OrderDetails { get; set; }
 
 
-        //This is how we use different name for our Objects to the database
+        //This is how we use different names for our Objects that are created to the database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //configurations
@@ -27,7 +27,7 @@ namespace Simple_Eshop_Admin_Page.Models
             modelBuilder.Entity<Order>().ToTable("Orders");
             modelBuilder.Entity<OrderDetail>().ToTable("OrderDetails");
 
-            //configuration using Fluent API
+            //configuration using Fluent API (data annotation like)
             modelBuilder.Entity<Category>()
                 .Property(b => b.Name)
                 .IsRequired();
