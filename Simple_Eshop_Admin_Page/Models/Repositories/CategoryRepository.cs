@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+
 namespace Simple_Eshop_Admin_Page.Models.Repositories
 {
     public class CategoryRepository : ICategoryRepository
@@ -12,12 +14,14 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
 
         public IEnumerable<Category> GetAllCategories()
         {
-            return _bethanysPieShopDbContext.Categories.OrderBy(o => o.CategoryId);
+            return _bethanysPieShopDbContext.Categories
+                .OrderBy(p => p.CategoryId);
         }
 
-        public Task<IEnumerable<Category>> GetAllCategoriesAsync()
+        public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
         {
-            throw new NotImplementedException();
+           return await _bethanysPieShopDbContext.Categories
+                .OrderBy(c => c.CategoryId).ToListAsync();
         }
     }
 }

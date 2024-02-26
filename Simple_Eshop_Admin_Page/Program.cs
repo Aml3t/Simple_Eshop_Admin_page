@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Simple_Eshop_Admin_Page.Models;
+using Simple_Eshop_Admin_Page.Models.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<BethanysPieShopDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString
     ("BethanysPieShopDbContextConnection")));
+
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
