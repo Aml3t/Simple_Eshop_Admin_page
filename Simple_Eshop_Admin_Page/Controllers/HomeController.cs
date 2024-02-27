@@ -1,8 +1,8 @@
-﻿using BethanysPieShopAdmin.Models;
+﻿using Simple_Eshop_Admin_Page.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace BethanysPieShopAdmin.Controllers
+namespace Simple_Eshop_Admin_Page.Controllers
 {
     public class HomeController : Controller
     {

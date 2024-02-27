@@ -1,4 +1,4 @@
-namespace BethanysPieShopAdmin.Models
+namespace Simple_Eshop_Admin_Page.Models
 {
     public class ErrorViewModel
     {
