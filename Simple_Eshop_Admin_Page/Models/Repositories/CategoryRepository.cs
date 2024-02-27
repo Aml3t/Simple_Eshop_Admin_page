@@ -23,5 +23,12 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
            return await _bethanysPieShopDbContext.Categories
                 .OrderBy(c => c.CategoryId).ToListAsync();
         }
+
+        public async Task<Category?> GetCategoryByIdAsync(int id)
+        {
+            return await _bethanysPieShopDbContext.Categories
+                .Include(p => p.Pies)
+                .FirstOrDefaultAsync(c => c.CategoryId == id);
+        }
     }
 }
