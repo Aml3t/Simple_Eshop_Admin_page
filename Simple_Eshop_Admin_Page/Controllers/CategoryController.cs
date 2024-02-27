@@ -22,5 +22,18 @@ namespace Simple_Eshop_Admin_Page.Controllers
 
             return View(model);
         }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var selectedCategory = await _categoryRepository
+                .GetCategoryByIdAsync(id.Value);
+
+            return View(selectedCategory);
+        }
     }
 }
