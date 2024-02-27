@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Simple_Eshop_Admin_Page.Models;
 using Simple_Eshop_Admin_Page.Models.Repositories;
+using Simple_Eshop_Admin_Page.ViewModels;
 
 namespace Simple_Eshop_Admin_Page.Controllers
 {
@@ -12,9 +13,14 @@ namespace Simple_Eshop_Admin_Page.Controllers
         {
             _categoryRepository = categoryRepository;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            CategoryListViewModel model = new()
+            {
+                Categories = (await _categoryRepository.GetAllCategoriesAsync()).ToList()
+            };
+
+            return View(model);
         }
     }
 }
