@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace Simple_Eshop_Admin_Page.Models.Repositories
@@ -18,9 +19,22 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
                 .OrderBy(o => o.OrderId).ToListAsync();
         }
 
-        public Task<Order?> GetOrderDetailsAsync(int? orderId)
+        public async Task<Order?> GetOrderDetailsAsync(int? orderId)
         {
-            throw new NotImplementedException();
+            if (orderId != null)
+            {
+                var order = await _bethanysPieShopDbContext.Orders
+                    .Include(o => o.OrderDetails)
+                    .ThenInclude(od => od.Pie)
+                    .OrderBy(o => o.OrderId)
+                    .Where(o => o.OrderId == orderId.Value)
+                    .FirstOrDefaultAsync();
+
+                return order;
+            }
+
+            return null;
+
         }
     }
 }
