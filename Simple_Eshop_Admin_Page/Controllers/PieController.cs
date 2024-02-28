@@ -19,5 +19,12 @@ namespace Simple_Eshop_Admin_Page.Controllers
             return View(pies);
         }
 
+        public async Task<IActionResult> Details(int id)
+        {
+            var pie = await _pieRepository.GetPieByIdAsync(id);
+
+            return View(pie);
+        }
+
     }
 }
