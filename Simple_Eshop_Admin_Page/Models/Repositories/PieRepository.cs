@@ -1,4 +1,6 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+
 namespace Simple_Eshop_Admin_Page.Models.Repositories
 {
     public class PieRepository : IPieRepository
@@ -10,14 +12,18 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
             _bethanysPieShopDbContext = bethanysPieShopDbContext;
         }
 
-        public Task<IEnumerable<Pie>> GetAllPiesAsync()
+        public async Task<IEnumerable<Pie>> GetAllPiesAsync()
         {
-            throw new NotImplementedException();
+            return await _bethanysPieShopDbContext.Pies
+                .OrderBy(p => p.PieId).ToListAsync();
         }
 
-        public Task<Pie?> GetPieByIdAsync(int pieId)
+        public async Task<Pie?> GetPieByIdAsync(int pieId)
         {
-            throw new NotImplementedException();
+            return await _bethanysPieShopDbContext.Pies
+                .Include(p => p.Ingredients)
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync(p => p.PieId == pieId);
         }
     }
 }
