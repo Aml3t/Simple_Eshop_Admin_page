@@ -27,7 +27,22 @@ namespace Simple_Eshop_Admin_Page.Controllers
                 Order selectedOrder = orderIndexViewModel.Orders.
                     Where(o => o.OrderId == orderId)
                     .Single();
+
+                orderIndexViewModel.OrderDetails = selectedOrder.OrderDetails;
+                orderIndexViewModel.SelectedOrderId = orderId;
             }
+
+            if (orderDetailId != null)
+            {
+                var selectedOrderDetails = orderIndexViewModel.OrderDetails
+                                          .Where(od => od.OrderDetailId == orderDetailId)
+                                          .Single();
+
+                orderIndexViewModel.Pies = new List<Pie>() { selectedOrderDetails.Pie};
+                orderIndexViewModel.SelectedOrderDetailId = orderDetailId;
+            }
+
+            return View(orderIndexViewModel);
         }
 
     }
