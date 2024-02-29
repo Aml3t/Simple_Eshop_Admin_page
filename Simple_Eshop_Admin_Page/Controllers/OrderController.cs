@@ -45,5 +45,12 @@ namespace Simple_Eshop_Admin_Page.Controllers
             return View(orderIndexViewModel);
         }
 
+        public async Task<IActionResult> Details(int? orderId)
+        {
+            var result = await _orderRepository.GetOrderDetailsAsync(orderId);
+
+            return View(result);
+        }
+
     }
 }
