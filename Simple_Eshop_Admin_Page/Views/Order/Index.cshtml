@@ -36,3 +36,37 @@
         </tr>
     }
 </table>
+
+@if (Model.OrderDetails != null)
+{
+    <h3>Order details for selected order</h3>
+    <table class="table table-condensed table-bordered">
+        <tr>
+            <th></th>
+            <th>ID</th>
+            <th>Detail total</th>
+        </tr>
+
+        @foreach (var item in Model.OrderDetails)
+        {
+            string selectedRow = "";
+            if (item.OrderDetailId == Model.SelectedOrderDetailId)
+            {
+                selectedRow = "success";
+            }
+            <tr class="@selectedRow">
+
+                <td>
+                    @item.OrderDetailId
+                </td>
+                <td>
+                    @item.Price
+                </td>
+                <td>
+                    <a asp-action="Index" asp-route-orderId="@item.OrderId" asp-route-orderDetailId="@item.OrderDetailId">Select</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+}
