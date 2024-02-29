@@ -12,5 +12,11 @@ namespace Simple_Eshop_Admin_Page.Controllers
             _orderRepository = orderRepository;
         }
 
+        public async Task<IActionResult> Index(int? orderId, int? orderDetailId)
+        {
+            
+
+        }
+
     }
 }
