@@ -1,0 +1,38 @@
+﻿@model OrderIndexViewModel
+
+<h2>Orders</h2>
+<hr />
+
+<table class="table table-condensed table-bordered">
+    <tr>
+        <th>Last Name</th>
+        <th>First Name</th>
+        <th>Total</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.Orders)
+    {
+        string selectedRow = "";
+
+        if (item.OrderId == Model.SelectedOrderId)
+        {
+            selectedRow = "success";
+        }
+
+        <tr class="@selectedRow">
+            <td>
+                @Html.DisplayFor(m => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(m => item.OrderTotal)
+            </td>
+            <td>
+                <a asp-action="Index" asp-route-orderId="@item.OrderId">Select</a>
+                <a asp-action="Details" asp-route-orderId="@item.OrderId">Details</a>
+            </td>
+        </tr>
+    }
+</table>
