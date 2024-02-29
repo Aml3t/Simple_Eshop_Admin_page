@@ -14,6 +14,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString
 
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<IPieRepository, PieRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

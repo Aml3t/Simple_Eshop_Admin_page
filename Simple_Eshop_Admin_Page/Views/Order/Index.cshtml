@@ -70,3 +70,27 @@
 
     </table>
 }
+
+@if (Model.Pies != null)
+{
+    <h3>
+        Pie in order details
+    </h3>
+    <table class="table table-condensed table-bordered">
+        <tr>
+            <th>Name</th>
+            <th>Item price</th>
+        </tr>
+        @foreach (var item in Model.Pies)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Price
+                </td>
+            </tr>
+        }
+    </table>
+}
