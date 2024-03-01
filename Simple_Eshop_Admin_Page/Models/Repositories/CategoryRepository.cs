@@ -12,6 +12,12 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
             _bethanysPieShopDbContext = bethanysPieShopDbContext;
         }
 
+        public async Task<int> AddCategoryAsync(Category category)
+        {
+            _bethanysPieShopDbContext.Add(category);
+            return await _bethanysPieShopDbContext.SaveChangesAsync();
+        }
+
         public IEnumerable<Category> GetAllCategories()
         {
             return _bethanysPieShopDbContext.Categories
