@@ -12,12 +12,6 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
             _bethanysPieShopDbContext = bethanysPieShopDbContext;
         }
 
-        public async Task<int> AddPieAsync(Pie pie)
-        {
-            _bethanysPieShopDbContext.Add(pie);
-            return await _bethanysPieShopDbContext.SaveChangesAsync();
-        }
-
         public async Task<IEnumerable<Pie>> GetAllPiesAsync()
         {
             return await _bethanysPieShopDbContext.Pies
@@ -33,6 +27,12 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
                 .AsNoTracking()
                 .Include(p => p.Category)
                 .FirstOrDefaultAsync(p => p.PieId == pieId);
+        }
+
+        public async Task<int> AddPieAsync(Pie pie)
+        {
+            _bethanysPieShopDbContext.Pies.Add(pie);
+            return await _bethanysPieShopDbContext.SaveChangesAsync();
         }
     }
 }

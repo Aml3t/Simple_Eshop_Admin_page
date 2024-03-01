@@ -22,7 +22,8 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
                 throw new Exception("The entered category already exists");
             }
 
-            _bethanysPieShopDbContext.Add(category);
+            _bethanysPieShopDbContext.Categories.Add(category);
+
             return await _bethanysPieShopDbContext.SaveChangesAsync();
         }
 

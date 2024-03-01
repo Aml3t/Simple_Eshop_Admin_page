@@ -39,10 +39,17 @@ namespace Simple_Eshop_Admin_Page.Controllers
 
         public async Task<IActionResult> Add()
         {
+            return View();
+        }
 
-            CategoryListViewModel categoryListViewModel = new() { Categories };
+        [HttpPost]
+        public async Task<IActionResult> Add([Bind("Name", "Description", "DateAdded")]
+                                            Category category)
+        {
 
-            return View(categoryListViewModel);
+            await _categoryRepository.AddCategoryAsync(category);
+
+            return RedirectToAction(nameof(Index));
 
         }
     }
