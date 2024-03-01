@@ -61,6 +61,9 @@ namespace Simple_Eshop_Admin_Page.Controllers
                 IsPieOfTheWeek = pieAddViewModel.Pie.IsPieOfTheWeek,
                 Name = pieAddViewModel.Pie.Name
             };
+
+            await _pieRepository.AddPieAsync(pie);
+            return RedirectToAction(nameof(Index));
         }
 
     }
