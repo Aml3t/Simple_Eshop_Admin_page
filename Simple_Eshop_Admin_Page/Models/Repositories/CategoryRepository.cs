@@ -15,19 +15,23 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
         public IEnumerable<Category> GetAllCategories()
         {
             return _bethanysPieShopDbContext.Categories
-                .OrderBy(p => p.CategoryId);
+                .OrderBy(p => p.CategoryId)
+                .AsNoTracking();
         }
 
         public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
         {
-           return await _bethanysPieShopDbContext.Categories
-                .OrderBy(c => c.CategoryId).ToListAsync();
+            return await _bethanysPieShopDbContext.Categories
+                 .OrderBy(c => c.CategoryId)
+                 .AsNoTracking()
+                 .ToListAsync();
         }
 
         public async Task<Category?> GetCategoryByIdAsync(int id)
         {
             return await _bethanysPieShopDbContext.Categories
                 .Include(p => p.Pies)
+                .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.CategoryId == id);
         }
     }
