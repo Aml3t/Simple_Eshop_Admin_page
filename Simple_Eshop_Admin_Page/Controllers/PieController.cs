@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Simple_Eshop_Admin_Page.Models;
 using Simple_Eshop_Admin_Page.Models.Repositories;
 using Simple_Eshop_Admin_Page.ViewModels;
@@ -42,6 +43,24 @@ namespace Simple_Eshop_Admin_Page.Controllers
 
             return View(pieAddViewModel);
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(PieAddViewModel pieAddViewModel)
+        {
+            Pie pie = new()
+            {
+                CategoryId = pieAddViewModel.Pie.CategoryId,
+                ShortDescription = pieAddViewModel.Pie.ShortDescription,
+                LongDescription = pieAddViewModel.Pie.LongDescription,
+                Price = pieAddViewModel.Pie.Price,
+                AllergyInformation = pieAddViewModel.Pie.AllergyInformation,
+                ImageThumbnailUrl = pieAddViewModel.Pie.ImageThumbnailUrl,
+                ImageUrl = pieAddViewModel.Pie.ImageUrl,
+                InStock = pieAddViewModel.Pie.InStock,
+                IsPieOfTheWeek = pieAddViewModel.Pie.IsPieOfTheWeek,
+                Name = pieAddViewModel.Pie.Name
+            };
         }
 
     }
