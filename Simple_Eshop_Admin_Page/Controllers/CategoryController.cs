@@ -1,4 +1,5 @@
 ﻿    using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Simple_Eshop_Admin_Page.Models;
 using Simple_Eshop_Admin_Page.Models.Repositories;
 using Simple_Eshop_Admin_Page.ViewModels;
@@ -34,6 +35,15 @@ namespace Simple_Eshop_Admin_Page.Controllers
                 .GetCategoryByIdAsync(id.Value);
 
             return View(selectedCategory);
+        }
+
+        public async Task<IActionResult> Add()
+        {
+
+            CategoryListViewModel categoryListViewModel = new() { Categories };
+
+            return View(categoryListViewModel);
+
         }
     }
 }

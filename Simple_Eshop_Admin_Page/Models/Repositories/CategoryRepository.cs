@@ -14,6 +14,14 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
 
         public async Task<int> AddCategoryAsync(Category category)
         {
+            bool categoryWithSameNameExists = await
+                _bethanysPieShopDbContext.Categories.AnyAsync(c => c.Name == category.Name);
+
+            if (categoryWithSameNameExists)
+            {
+                throw new Exception("The entered category already exists");
+            }
+
             _bethanysPieShopDbContext.Add(category);
             return await _bethanysPieShopDbContext.SaveChangesAsync();
         }
