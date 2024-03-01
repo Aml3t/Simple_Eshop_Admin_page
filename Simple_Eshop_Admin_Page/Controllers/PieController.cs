@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Simple_Eshop_Admin_Page.Models;
 using Simple_Eshop_Admin_Page.Models.Repositories;
+using Simple_Eshop_Admin_Page.ViewModels;
 
 namespace Simple_Eshop_Admin_Page.Controllers
 {
@@ -33,7 +35,12 @@ namespace Simple_Eshop_Admin_Page.Controllers
         {
             var allCategories = await _categoryRepository.GetAllCategoriesAsync();
 
-            var pie = _pieRepository.AddPieAsync(new Pie { });
+            IEnumerable<SelectListItem> selectListItems = new SelectList(
+                allCategories, "CategoryId", "Name", null);
+
+            PieAddViewModel pieAddViewModel = new() { Categories = selectListItems };
+
+            return View(pieAddViewModel);
 
         }
 
