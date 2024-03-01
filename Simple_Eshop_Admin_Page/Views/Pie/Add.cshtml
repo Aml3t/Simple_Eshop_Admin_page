@@ -1,2 +1,22 @@
 ﻿@model PieAddViewModel
 
+<form method="post" asp-controller="Pie" asp-action="Add">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" value="@Model.Name" /><br />
+
+    <label for="description">Description:</label>
+    <input type="text" id="description" name="description" value="@Model.Description" /><br />
+
+    <label for="price">Price:</label>
+    <input type="number" id="price" name="price" value="@Model.Price" /><br />
+
+    <label for="category">Category:</label>
+    <select id="category" name="category">
+        @foreach (var category in Model.Categories)
+        {
+            <option value="@category.Id">@category.Name</option>
+        }
+    </select><br />
+
+    <button type="submit">Submit</button>
+</form>
