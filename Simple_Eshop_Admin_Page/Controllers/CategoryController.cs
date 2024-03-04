@@ -14,6 +14,7 @@ namespace Simple_Eshop_Admin_Page.Controllers
         {
             _categoryRepository = categoryRepository;
         }
+
         public async Task<IActionResult> Index()
         {
             CategoryListViewModel model = new()
