@@ -27,9 +27,26 @@ namespace Simple_Eshop_Admin_Page.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var pie = await _pieRepository.GetPieByIdAsync(id);
+            try
+            {
+                var pie = await _pieRepository.GetPieByIdAsync(id);
 
-            return View(pie);
+                if (pie != null)
+                {
+                    return View(pie);
+
+                }
+
+                return NotFound();
+
+            }
+            catch (Exception ex)
+            {
+
+                ViewData["ErrorMessage"] = $"There was an error: {ex.Message}";
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Add()
@@ -49,7 +66,7 @@ namespace Simple_Eshop_Admin_Page.Controllers
             catch (Exception ex)
             {
 
-                ViewData["Error message"] = $"There was an error: {ex.Message}";
+                ViewData["ErrorMessage"] = $"There was an error: {ex.Message}";
             }
             return View(new PieAddViewModel());
         }

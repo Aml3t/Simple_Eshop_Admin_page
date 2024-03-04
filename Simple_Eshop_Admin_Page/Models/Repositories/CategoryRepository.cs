@@ -36,6 +36,8 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
 
         public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
         {
+            throw new Exception("Database down");
+
             return await _bethanysPieShopDbContext.Categories
                  .OrderBy(c => c.CategoryId)
                  .AsNoTracking()

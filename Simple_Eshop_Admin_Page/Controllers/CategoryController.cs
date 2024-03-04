@@ -38,7 +38,7 @@ namespace Simple_Eshop_Admin_Page.Controllers
             return View(selectedCategory);
         }
 
-        public async Task<IActionResult> Add()
+        public IActionResult Add()
         {
             return View();
         }
