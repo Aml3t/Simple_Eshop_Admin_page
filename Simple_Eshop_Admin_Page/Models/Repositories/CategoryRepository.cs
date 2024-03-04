@@ -36,7 +36,7 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
 
         public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
         {
-            throw new Exception("Database down");
+            //throw new Exception("Database down"); Testing the try catch block
 
             return await _bethanysPieShopDbContext.Categories
                  .OrderBy(c => c.CategoryId)
