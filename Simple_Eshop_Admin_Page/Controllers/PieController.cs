@@ -34,15 +34,24 @@ namespace Simple_Eshop_Admin_Page.Controllers
 
         public async Task<IActionResult> Add()
         {
-            var allCategories = await _categoryRepository.GetAllCategoriesAsync();
+            try
+            {
+                IEnumerable<Category>? allCategories = await
+                    _categoryRepository.GetAllCategoriesAsync();
 
-            IEnumerable<SelectListItem> selectListItems = new SelectList(
-                allCategories, "CategoryId", "Name", null);
+                IEnumerable<SelectListItem> selectListItems = new SelectList
+                    (allCategories, "CategoryId", "Name", null);
 
-            PieAddViewModel pieAddViewModel = new() { Categories = selectListItems };
+                PieAddViewModel pieAddViewModel = new() { Categories = selectListItems };
 
-            return View(pieAddViewModel);
+                return View(pieAddViewModel);
+            }
+            catch (Exception ex)
+            {
 
+                ViewData["Error message"] = $"There was an error: {ex.Message}";
+            }
+            return View(new PieAddViewModel());
         }
 
         [HttpPost]
@@ -76,7 +85,7 @@ namespace Simple_Eshop_Admin_Page.Controllers
             pieAddViewModel.Categories = selectListItems;
 
             return View(pieAddViewModel);
- 
+
         }
     }
 }
