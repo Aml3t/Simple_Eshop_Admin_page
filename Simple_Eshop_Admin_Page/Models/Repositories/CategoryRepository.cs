@@ -69,6 +69,18 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
                 _bethanysPieShopDbContext.Categories.FirstOrDefaultAsync
                 (c=> c.CategoryId == category.CategoryId);
 
+            if (categoryToUpdate != null)
+            {
+                categoryToUpdate.Name = category.Name;
+                categoryToUpdate.Description = category.Description;
+
+                _bethanysPieShopDbContext.Categories.Update(categoryToUpdate);
+                return await _bethanysPieShopDbContext.SaveChangesAsync();
+            }
+            else
+            {
+                throw new Exception("The category to update can't be found");
+            }
 
 
 
