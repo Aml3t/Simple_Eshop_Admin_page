@@ -94,9 +94,11 @@ namespace Simple_Eshop_Admin_Page.Controllers
             catch (Exception ex)
             {
 
-                
+                ModelState.AddModelError("", $"Updating the category failed, " +
+                    $"please try again! Error {ex.Message}");
             }
 
+            return View(category);
         }
     }
 }
