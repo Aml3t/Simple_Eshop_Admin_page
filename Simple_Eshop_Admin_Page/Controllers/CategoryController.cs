@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Simple_Eshop_Admin_Page.Models;
 using Simple_Eshop_Admin_Page.Models.Repositories;
 using Simple_Eshop_Admin_Page.ViewModels;
@@ -82,6 +83,19 @@ namespace Simple_Eshop_Admin_Page.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Category category)
         {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    await _categoryRepository.UpdateCategoryAsync(category);
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            catch (Exception ex)
+            {
+
+                
+            }
 
         }
     }
