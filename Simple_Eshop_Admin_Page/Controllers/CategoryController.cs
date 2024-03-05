@@ -66,9 +66,23 @@ namespace Simple_Eshop_Admin_Page.Controllers
             return View(category);
         }
 
-        public IActionResult Edit()
+        public async Task<IActionResult> Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var selectedCategory = await
+                _categoryRepository.GetCategoryByIdAsync(id.Value);
+
+            return View(selectedCategory);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Category category)
+        {
+
         }
     }
 }
