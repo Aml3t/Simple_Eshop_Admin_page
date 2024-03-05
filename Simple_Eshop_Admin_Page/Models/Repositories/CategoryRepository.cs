@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace Simple_Eshop_Admin_Page.Models.Repositories
 {
@@ -59,21 +60,18 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
                 .AnyAsync(c => c.Name == category.Name
                 && c.CategoryId == category.CategoryId);
 
-            if (categoryWithSameNameExists == true)
+            if (categoryWithSameNameExists)
             {
-                Category newCategory = new Category
-                {
-                    Name = category.Name,
-                    Description = category.Description
-                };
-
-                _bethanysPieShopDbContext.Categories.Update();
-
+                throw new Exception("A category with the same name already exists");
             }
-            else
-            {
-                throw new Exception("No category found");
-            }
+
+            var categoryToUpdate = await
+                _bethanysPieShopDbContext.Categories.FirstOrDefaultAsync
+                (c=> c.CategoryId == category.CategoryId);
+
+
+
+
         }
     }
 }
