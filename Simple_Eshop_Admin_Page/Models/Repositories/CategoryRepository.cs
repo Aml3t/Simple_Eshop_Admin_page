@@ -51,5 +51,29 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.CategoryId == id);
         }
+
+        public async Task<int> UpdateCategoryAsync(Category category)
+        {
+            bool categoryWithSameNameExists = await
+                _bethanysPieShopDbContext.Categories
+                .AnyAsync(c => c.Name == category.Name
+                && c.CategoryId == category.CategoryId);
+
+            if (categoryWithSameNameExists == true)
+            {
+                Category newCategory = new Category
+                {
+                    Name = category.Name,
+                    Description = category.Description
+                };
+
+                _bethanysPieShopDbContext.Categories.Update();
+
+            }
+            else
+            {
+                throw new Exception("No category found");
+            }
+        }
     }
 }
