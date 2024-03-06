@@ -54,7 +54,7 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
                 pieToUpdate.IsPieOfTheWeek = pie.IsPieOfTheWeek;
                 pieToUpdate.Name = pie.Name;
 
-                _bethanysPieShopDbContext.Update(pieToUpdate);
+                _bethanysPieShopDbContext.Pies.Update(pieToUpdate);
                 return await _bethanysPieShopDbContext.SaveChangesAsync();
             }
             else
