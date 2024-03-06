@@ -117,6 +117,16 @@ namespace Simple_Eshop_Admin_Page.Controllers
 
         public async Task<IActionResult> Edit(int? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var allCategories = await
+                _categoryRepository.GetAllCategoriesAsync();
+
+            IEnumerable<SelectListItem> selectListItems = new SelectList
+                (allCategories, "CategoryId", "Name", null);
 
         }
 
