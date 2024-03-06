@@ -43,9 +43,24 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
 
             if (pieToUpdate != null)
             {
-                
-            }
+                pieToUpdate.CategoryId = pie.CategoryId;
+                pieToUpdate.ShortDescription = pie.ShortDescription;
+                pieToUpdate.LongDescription = pie.LongDescription;
+                pieToUpdate.Price = pie.Price;
+                pieToUpdate.AllergyInformation = pie.AllergyInformation;
+                pieToUpdate.ImageThumbnailUrl = pie.ImageThumbnailUrl;
+                pieToUpdate.ImageUrl = pie.ImageUrl;
+                pieToUpdate.InStock = pie.InStock;
+                pieToUpdate.IsPieOfTheWeek = pie.IsPieOfTheWeek;
+                pieToUpdate.Name = pie.Name;
 
+                _bethanysPieShopDbContext.Update(pieToUpdate);
+                return await _bethanysPieShopDbContext.SaveChangesAsync();
+            }
+            else
+            {
+                throw new Exception($"The pie to update can't be found.");
+            }
         }
     }
 }
