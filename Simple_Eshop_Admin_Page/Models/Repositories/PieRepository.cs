@@ -35,9 +35,16 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
             return await _bethanysPieShopDbContext.SaveChangesAsync();
         }
 
-        public Task<int> UpdatePieAsync(Pie pie)
+        public async Task<int> UpdatePieAsync(Pie pie)
         {
-            throw new NotImplementedException();
+            bool pieIsAvailable = await
+                _bethanysPieShopDbContext.Pies
+                .AnyAsync(p => p.Name == pie.Name && p.PieId == pie.PieId);
+
+            if (!pieIsAvailable)
+            {
+                throw new Exception("The pie does not exists");
+            }
         }
     }
 }

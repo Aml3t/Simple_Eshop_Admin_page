@@ -58,7 +58,7 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
             bool categoryWithSameNameExists = await
                 _bethanysPieShopDbContext.Categories
                 .AnyAsync(c => c.Name == category.Name
-                && c.CategoryId == category.CategoryId);
+                && c.CategoryId != category.CategoryId);
 
             if (categoryWithSameNameExists)
             {
@@ -81,8 +81,6 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
             {
                 throw new Exception("The category to update can't be found");
             }
-
-
 
         }
     }
