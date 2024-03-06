@@ -128,11 +128,17 @@ namespace Simple_Eshop_Admin_Page.Controllers
             IEnumerable<SelectListItem> selectListItems = new SelectList
                 (allCategories, "CategoryId", "Name", null);
 
+            var selectedPie = await _pieRepository.GetPieByIdAsync(id.Value);
+
+            PieEditViewModel pieEditViewModel = new () { Categories = selectListItems, Pie = selectedPie };
+            
+            return View(pieEditViewModel);
+
         }
 
-        public async Task<IActionResult> Edit(Pie pie)
-        {
+        //public async Task<IActionResult> Edit(Pie pie)
+        //{
 
-        }
+        //}
     }
 }
