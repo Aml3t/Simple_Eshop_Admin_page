@@ -130,15 +130,17 @@ namespace Simple_Eshop_Admin_Page.Controllers
 
             var selectedPie = await _pieRepository.GetPieByIdAsync(id.Value);
 
-            PieEditViewModel pieEditViewModel = new () { Categories = selectListItems, Pie = selectedPie };
-            
+            PieEditViewModel pieEditViewModel = new() { Categories = selectListItems, Pie = selectedPie };
+
             return View(pieEditViewModel);
 
         }
 
-        //public async Task<IActionResult> Edit(Pie pie)
-        //{
+        [HttpPost]
+        public async Task<IActionResult> Edit(PieEditViewModel pieEditViewModel)
+        {
 
-        //}
+
+        }
     }
 }
