@@ -139,7 +139,33 @@ namespace Simple_Eshop_Admin_Page.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(PieEditViewModel pieEditViewModel)
         {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    await _pieRepository.UpdatePieAsync(pieEditViewModel.Pie);
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", $"Updating the category failed," +
+                    $"please try again! Error: {ex.Message}");
+            }
 
+            var allCategories = await _categoryRepository
+                .GetAllCategoriesAsync();
+
+            IEnumerable<SelectListItem> selectListItems = new SelectList
+                (allCategories, "CategoryId", "Name", null);
+
+            pieEditViewModel.Categories = selectListItems;
+
+            return View(pieEditViewModel);
 
         }
     }
