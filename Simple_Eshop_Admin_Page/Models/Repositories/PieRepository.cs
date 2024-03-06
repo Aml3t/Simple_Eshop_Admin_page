@@ -34,5 +34,10 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
             _bethanysPieShopDbContext.Pies.Add(pie);
             return await _bethanysPieShopDbContext.SaveChangesAsync();
         }
+
+        public Task<int> UpdatePieAsync(Pie pie)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
