@@ -114,5 +114,15 @@ namespace Simple_Eshop_Admin_Page.Controllers
             return View(pieAddViewModel);
 
         }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+
+        }
+
+        public async Task<IActionResult> Edit(Pie pie)
+        {
+
+        }
     }
 }
