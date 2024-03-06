@@ -37,14 +37,15 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
 
         public async Task<int> UpdatePieAsync(Pie pie)
         {
-            bool pieIsAvailable = await
+            var pieToUpdate = await
                 _bethanysPieShopDbContext.Pies
-                .AnyAsync(p => p.Name == pie.Name && p.PieId == pie.PieId);
+                .FirstOrDefaultAsync(p => p.PieId == pie.PieId);
 
-            if (!pieIsAvailable)
+            if (pieToUpdate != null)
             {
-                throw new Exception("The pie does not exists");
+                
             }
+
         }
     }
 }
