@@ -62,5 +62,16 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
                 throw new Exception($"The pie to update can't be found.");
             }
         }
+
+        public async Task<int> DeletePieAsync(int pieId)
+        {
+            var pieToDelete = await _bethanysPieShopDbContext.Pies
+                .FirstOrDefaultAsync(p => p.PieId == pieId);
+
+            if (true)
+            {
+
+            }
+        }
     }
 }
