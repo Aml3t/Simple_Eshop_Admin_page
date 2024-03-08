@@ -83,5 +83,18 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
             }
 
         }
+
+        public Task<int> DeleteCategoryAsync(int id)
+        {
+            if (id != null)
+            {
+
+            }
+            else
+            {
+                return throw new Exception("Invalid category");S
+            }
+        }
+
     }
 }
