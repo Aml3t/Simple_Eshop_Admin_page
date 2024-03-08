@@ -89,13 +89,23 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
             var categoryToDelete = await _bethanysPieShopDbContext.Categories
                 .FirstOrDefaultAsync(c => c.CategoryId == id);
 
+            var piesInCategory = _bethanysPieShopDbContext.Pies
+                .Any(p => p.CategoryId == id);
+
+            if (piesInCategory is true)
+            {
+                throw new Exception("Pies exist in this repository. Please delete all pies" +
+                    "in this category before deleting the category");
+            }
+
             if (categoryToDelete != null)
             {
-                
+                _bethanysPieShopDbContext.Remove(categoryToDelete);
+                return await _bethanysPieShopDbContext.SaveChangesAsync();
             }
             else
             {
-                throw new Exception("Invalid category");
+                throw new ArgumentException($"The category to delete can't be found.");
             }
         }
 
