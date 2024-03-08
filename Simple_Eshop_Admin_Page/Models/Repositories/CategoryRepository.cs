@@ -100,7 +100,7 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
 
             if (categoryToDelete != null)
             {
-                _bethanysPieShopDbContext.Remove(categoryToDelete);
+                _bethanysPieShopDbContext.Categories.Remove(categoryToDelete);
                 return await _bethanysPieShopDbContext.SaveChangesAsync();
             }
             else

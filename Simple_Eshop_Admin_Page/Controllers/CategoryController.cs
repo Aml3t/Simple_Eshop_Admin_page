@@ -60,7 +60,7 @@ namespace Simple_Eshop_Admin_Page.Controllers
             catch (Exception ex)
             {
 
-                ModelState.AddModelError("",$"Adding the category failed, please try again! " +
+                ModelState.AddModelError("", $"Adding the category failed, please try again! " +
                     $"Error: {ex.Message}");
             }
 
@@ -114,17 +114,27 @@ namespace Simple_Eshop_Admin_Page.Controllers
             if (CategoryId == null)
             {
                 ViewData["ErrorMessage"] = "Deleting the category failed, invalid ID!";
+                return View();
             }
 
             try
             {
+                await _categoryRepository.DeleteCategoryAsync(CategoryId.Value);
 
+                TempData["CategoryDeleted"] = "Deleted the category successfully";
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
 
-                throw;
+                ViewData["ErrorMessage"] = $"Deleting the category failed, please try again!" +
+                    $"Error: {ex.Message}";
             }
+
+            var selectedCategory = await _categoryRepository
+                .GetCategoryByIdAsync(CategoryId.Value);
+
+            return View(selectedCategory);
         }
     }
 }
