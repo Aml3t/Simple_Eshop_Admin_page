@@ -101,6 +101,30 @@ namespace Simple_Eshop_Admin_Page.Controllers
             return View(category);
         }
 
+        public async Task<IActionResult> Delete(int id)
+        {
+            var selectedCategory = await _categoryRepository.GetCategoryByIdAsync(id);
 
+            return View(selectedCategory);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int? CategoryId)
+        {
+            if (CategoryId == null)
+            {
+                ViewData["ErrorMessage"] = "Deleting the category failed, invalid ID!";
+            }
+
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
     }
 }
