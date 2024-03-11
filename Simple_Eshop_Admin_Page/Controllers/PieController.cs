@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Identity.Client;
 using Simple_Eshop_Admin_Page.Models;
 using Simple_Eshop_Admin_Page.Models.Repositories;
 using Simple_Eshop_Admin_Page.ViewModels;
@@ -169,12 +170,31 @@ namespace Simple_Eshop_Admin_Page.Controllers
 
         }
 
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int pieId)
         {
-            var selectedPieId = _pieRepository.GetPieByIdAsync(id);
-            return View(selectedPieId);
+            var selectedPie = await _pieRepository.GetPieByIdAsync(pieId);
+            return View(selectedPie);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(int? pieId)
+        {
+            if (pieId == null)
+            {
+                ViewData["ErrorMessage"] = "Deleting the pie failed, invalid ID!";
+                return View();
+            }
 
+            try
+            {
+                await _pieRepository.DeletePieAsync(pieId.Value);
+                TempData["PieDeleted"] = "Pie deleted successfully!";
+                return View(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }
