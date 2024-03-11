@@ -168,5 +168,10 @@ namespace Simple_Eshop_Admin_Page.Controllers
             return View(pieEditViewModel);
 
         }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+
+        }
     }
 }
