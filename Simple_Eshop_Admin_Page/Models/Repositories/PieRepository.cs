@@ -68,9 +68,9 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
             var pieToDelete = await _bethanysPieShopDbContext.Pies
                 .FirstOrDefaultAsync(p => p.PieId == pieId);
 
-            if (true)
+            if (pieToDelete != null)
             {
-
+                
             }
         }
     }
