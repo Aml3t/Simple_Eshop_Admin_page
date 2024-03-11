@@ -170,9 +170,10 @@ namespace Simple_Eshop_Admin_Page.Controllers
 
         }
 
-        public async Task<IActionResult> Delete(int pieId)
+        public async Task<IActionResult> Delete(int id)
         {
-            var selectedPie = await _pieRepository.GetPieByIdAsync(pieId);
+            var selectedPie = await _pieRepository.GetPieByIdAsync(id);
+
             return View(selectedPie);
         }
 
