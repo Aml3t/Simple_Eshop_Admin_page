@@ -1,0 +1,20 @@
+﻿@model Pie
+
+<h2>Delete pie @Model?.Name</h2>
+<hr />
+
+@if (ViewData["ErrorMessage"] != null)
+{
+    <p class="text-danger">@ViewData["ErrorMessage"]</p>
+}
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            <label asp-for="PieId"></label>
+        </dt>
+        <dd class="col-sm-10">
+            @Model?.PieId
+        </dd>
+        <dt class="col-sm-2">
+            <label asp-for="Name"></label>
