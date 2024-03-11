@@ -193,8 +193,12 @@ namespace Simple_Eshop_Admin_Page.Controllers
             }
             catch (Exception ex)
             {
-                throw;
+                ViewData["ErrorMessage"] = $"Deleting the pie failed," +
+                    $" please try again! Error: {ex.Message}";
             }
+
+            var selectedPie = await _pieRepository.GetPieByIdAsync(pieId.Value);
+            return View(selectedPie);
         }
     }
 }
