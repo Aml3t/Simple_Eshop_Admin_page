@@ -62,7 +62,7 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
                 throw new Exception($"The pie to update can't be found.");
             }
         }
-        
+
         public async Task<int> DeletePieAsync(int pieId)
         {
             var pieToDelete = await _bethanysPieShopDbContext.Pies
@@ -80,13 +80,20 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
         }
         public async Task<int> GetAllPiesCountAsync()
         {
-            var count  = await _bethanysPieShopDbContext.Pies.CountAsync();
+            var count = await _bethanysPieShopDbContext.Pies.CountAsync();
             return count;
         }
 
         public Task<IEnumerable<Pie>> GetPiesPagedAsync(int? pageNumber, int pageSize)
         {
-            throw new NotImplementedException();
+            IQueryable<Pie> pies = from p in _bethanysPieShopDbContext.Pies
+                                   select p;
+
+            pageNumber ??= 1;
+
+            pies = pies.Skip((pageNumber.Value - 1) * pageSize).Take(pageSize);
+
+            return pies.
         }
 
     }
