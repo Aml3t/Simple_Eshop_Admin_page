@@ -78,9 +78,10 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
                 throw new ArgumentException($"The pie to delete can't be found.");
             }
         }
-        public Task<int> GetAllPiesCountAsync()
+        public async Task<int> GetAllPiesCountAsync()
         {
-            throw new NotImplementedException();
+            var count  = await _bethanysPieShopDbContext.Pies.CountAsync();
+            return count;
         }
 
         public Task<IEnumerable<Pie>> GetPiesPagedAsync(int? pageNumber, int pageSize)
