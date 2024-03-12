@@ -99,16 +99,13 @@ namespace Simple_Eshop_Admin_Page.Controllers
             }
             catch (Exception ex)
             {
-
                 ModelState.AddModelError("", $"Adding the pie failed, please try again! Error: {ex.Message}");
-
             }
-
 
             var allCategories = await _categoryRepository.GetAllCategoriesAsync();
 
-            IEnumerable<SelectListItem> selectListItems = new SelectList(
-                allCategories, "CategoryId", "Name", null);
+            IEnumerable<SelectListItem> selectListItems = new SelectList
+                (allCategories, "CategoryId", "Name", null);
 
             pieAddViewModel.Categories = selectListItems;
 
@@ -190,7 +187,7 @@ namespace Simple_Eshop_Admin_Page.Controllers
             {
                 await _pieRepository.DeletePieAsync(pieId.Value);
                 TempData["PieDeleted"] = "Pie deleted successfully!";
-                return View(nameof(Index));
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {

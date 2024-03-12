@@ -2,7 +2,7 @@
 <h2>Pies</h2>
 <hr />
 
-@if (!Model.Any())
+@if (Model == null || !Model.Any())
 {
     <tr><td colspan="3" class="text-center">No pies at this point</td></tr>
 }
@@ -21,6 +21,8 @@ else
             </th>
             <th>Actions</th>
         </tr>
+
+        <tbody>
         @foreach (var pie in Model)
         {
 
@@ -35,5 +37,6 @@ else
                 </td>
             </tr>
         }
+        </tbody>
     </table>
 }
