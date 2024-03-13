@@ -84,7 +84,7 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
             return count;
         }
 
-        public Task<IEnumerable<Pie>> GetPiesPagedAsync(int? pageNumber, int pageSize)
+        public async Task<IEnumerable<Pie>> GetPiesPagedAsync(int? pageNumber, int pageSize)
         {
             IQueryable<Pie> pies = from p in _bethanysPieShopDbContext.Pies
                                    select p;
@@ -93,7 +93,7 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
 
             pies = pies.Skip((pageNumber.Value - 1) * pageSize).Take(pageSize);
 
-            return pies.
+            return await pies.AsNoTracking().ToListAsync();
         }
 
     }
