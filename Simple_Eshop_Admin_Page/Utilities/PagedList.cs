@@ -9,9 +9,13 @@ namespace Simple_Eshop_Admin_Page.Utilities
         public bool HasPreviousPage => PageIndex > 1;
         public bool HasNextPage => PageIndex < TotalNumberOfPages;
 
-        public PagedList(List<T> items, int count, int pageIndex,  )
+        public PagedList(List<T> items, int count, int pageIndex, int pageSize)
         {
-            
+            PageIndex = pageIndex;
+
+            TotalNumberOfPages = (int)Math.Ceiling(count / (double)pageSize);
+
+            AddRange(items);
         }
     }
 }
