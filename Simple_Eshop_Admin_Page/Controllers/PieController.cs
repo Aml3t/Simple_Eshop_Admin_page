@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Identity.Client;
 using Simple_Eshop_Admin_Page.Models;
 using Simple_Eshop_Admin_Page.Models.Repositories;
+using Simple_Eshop_Admin_Page.Utilities;
 using Simple_Eshop_Admin_Page.ViewModels;
 
 namespace Simple_Eshop_Admin_Page.Controllers
@@ -200,8 +201,15 @@ namespace Simple_Eshop_Admin_Page.Controllers
         }
 
         private int pageSize = 5;
-        public async Task<IActionResult> IndexPaging(int? PageNumber)
+        public async Task<IActionResult> IndexPaging(int? pageNumber)
         {
+            var pies = await _pieRepository.GetPiesPagedAsync(pageNumber, pageSize);
+            pageNumber ??= 1;
+
+            var count = await _pieRepository.GetAllPiesCountAsync();
+
+            return View(new PagedList<Pie>(pies.ToList(),
+                count, pageNumber.Value, pageSize));
 
         }
 
