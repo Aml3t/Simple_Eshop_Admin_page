@@ -198,5 +198,12 @@ namespace Simple_Eshop_Admin_Page.Controllers
             var selectedPie = await _pieRepository.GetPieByIdAsync(pieId.Value);
             return View(selectedPie);
         }
+
+        private int pageSize = 5;
+        public async Task<IActionResult> IndexPaging(int? PageNumber)
+        {
+
+        }
+
     }
 }
