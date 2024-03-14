@@ -213,7 +213,7 @@ namespace Simple_Eshop_Admin_Page.Controllers
 
         }
 
-        public async Task<IActionResult> IndexPagingSorted(string sortBy, int? pageNumber)
+        public async Task<IActionResult> IndexPagingSorting(string sortBy, int? pageNumber)
         {
             ViewData["CurrentSort"] = sortBy;
 
