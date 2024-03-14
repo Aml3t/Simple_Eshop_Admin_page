@@ -97,7 +97,7 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
             return await pies.AsNoTracking().ToListAsync();
         }
 
-        public Task<IEnumerable<Pie>> GetPiesSortedAndPagedAsync(string sortBy, int? pageNumber, int pageSize)
+        public async Task<IEnumerable<Pie>> GetPiesSortedAndPagedAsync(string sortBy, int? pageNumber, int pageSize)
         {
             IQueryable<Pie> pies = from p in _bethanysPieShopDbContext.Pies
                                    select p;
@@ -123,8 +123,15 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
                     pies = pies.OrderBy(p => p.Price);
                     break;
                 default:
+                    pies = pies.OrderBy(p => p.PieId);
                     break;
             }
+
+            pageNumber ??= 1;
+
+            pies = pies.Skip((pageNumber.Value - 1) * pageSize).Take(pageSize);
+
+            return await pies.AsNoTracking().ToListAsync();
         }
     }
 }
