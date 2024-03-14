@@ -9,5 +9,7 @@
         Task<int> DeletePieAsync(int pieId);
         Task<int> GetAllPiesCountAsync();
         Task<IEnumerable<Pie>> GetPiesPagedAsync(int? pageNumber, int pageSize);
+        Task<IEnumerable<Pie>> GetPiesSortedAndPagedAsync(string sortBy,int? pageNumber, int pageSize);
+
     }
 }

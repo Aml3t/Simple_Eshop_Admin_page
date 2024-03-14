@@ -78,6 +78,7 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
                 throw new ArgumentException($"The pie to delete can't be found.");
             }
         }
+
         public async Task<int> GetAllPiesCountAsync()
         {
             var count = await _bethanysPieShopDbContext.Pies.CountAsync();
@@ -96,5 +97,10 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
             return await pies.AsNoTracking().ToListAsync();
         }
 
+        public Task<IEnumerable<Pie>> GetPiesSortedAndPagedAsync(string sortBy, int? pageNumber, int pageSize)
+        {
+            IQueryable<Pie> pies = from p in _bethanysPieShopDbContext.Pies
+                                   select p;
+        }
     }
 }
