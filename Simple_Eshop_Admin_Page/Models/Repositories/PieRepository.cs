@@ -101,6 +101,30 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
         {
             IQueryable<Pie> pies = from p in _bethanysPieShopDbContext.Pies
                                    select p;
+
+            switch (sortBy)
+            {
+                case "name_desc":
+                    pies = pies.OrderByDescending(p => p.Name);
+                    break;
+                case "name":
+                    pies = pies.OrderBy(p => p.Name);
+                    break;
+                case "id_desc":
+                    pies = pies.OrderByDescending(p => p.PieId);
+                    break;
+                case "id":
+                    pies = pies.OrderBy(p => p.PieId);
+                    break;
+                case "price_desc":
+                    pies = pies.OrderByDescending(p => p.Price);
+                    break;
+                case "price":
+                    pies = pies.OrderBy(p => p.Price);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
