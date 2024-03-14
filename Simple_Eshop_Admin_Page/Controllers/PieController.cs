@@ -213,5 +213,15 @@ namespace Simple_Eshop_Admin_Page.Controllers
 
         }
 
+        public async Task<IActionResult> IndexPagingSorted(string sortBy ,int? pageNumber)
+        {
+            ViewData["CurrentSort"] = sortBy;
+
+
+
+            var pies = await _pieRepository.GetPiesSortedAndPagedAsync(sortBy, pageNumber, pageSize);
+
+        }
+
     }
 }
