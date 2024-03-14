@@ -217,7 +217,8 @@ namespace Simple_Eshop_Admin_Page.Controllers
         {
             ViewData["CurrentSort"] = sortBy;
 
-
+            ViewData["IdSortParam"] = String.IsNullOrEmpty(sortBy) || sortBy ==
+                "id_desc" ? "id" : "id_desc";
 
             var pies = await _pieRepository.GetPiesSortedAndPagedAsync(sortBy, pageNumber, pageSize);
 
