@@ -212,7 +212,6 @@ namespace Simple_Eshop_Admin_Page.Controllers
                 count, pageNumber.Value, pageSize));
 
         }
-
         public async Task<IActionResult> IndexPagingSorting(string sortBy, int? pageNumber)
         {
             ViewData["CurrentSort"] = sortBy;
@@ -232,6 +231,17 @@ namespace Simple_Eshop_Admin_Page.Controllers
                 count, pageNumber.Value, pageSize));
 
         }
+        public async Task<IActionResult> Search(string searchQuery, int? categoryId)
+        {
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Search(string searchQuery, int? categoryId)
+        {
+
+        }
+
 
     }
 }

@@ -150,7 +150,7 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
 
             if (categoryId != null)
             {
-                pies = pies.Where(p => p.PieId == categoryId);
+                pies = pies.Where(s => s.PieId == categoryId);
             }
 
             return await pies.ToListAsync();
