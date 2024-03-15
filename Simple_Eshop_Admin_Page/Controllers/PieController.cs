@@ -231,8 +231,26 @@ namespace Simple_Eshop_Admin_Page.Controllers
                 count, pageNumber.Value, pageSize));
 
         }
-        public async Task<IActionResult> Search(string searchQuery, int? categoryId)
+
+        public async Task<IActionResult> Search(string searchQuery, int? searchCategory)
         {
+            var allCategories = await _categoryRepository.GetAllCategoriesAsync();
+
+            IEnumerable<SelectListItem> selectListItems = new SelectList(allCategories,
+                "CategoryId", "Name", null);
+
+            if (searchQuery is not null)
+            {
+                var pies = await _pieRepository.SearchPies(searchQuery, searchCategory);
+
+                return View(new PieSearchViewModel()
+                {
+                   Pies = pies,
+                   SearchCategory = searchCategory,
+                   Categories = selectListItems,
+                   SearchQuery = searchQuery
+                });
+            }
 
         }
 
