@@ -232,7 +232,7 @@ namespace Simple_Eshop_Admin_Page.Controllers
 
         }
 
-        public async Task<IActionResult> Search(string searchQuery, int? searchCategory)
+        public async Task<IActionResult> Search(string? searchQuery, int? searchCategory)
         {
             var allCategories = await _categoryRepository.GetAllCategoriesAsync();
 
@@ -251,6 +251,14 @@ namespace Simple_Eshop_Admin_Page.Controllers
                    SearchQuery = searchQuery
                 });
             }
+
+            return View(new PieSearchViewModel()
+            {
+                Pies = new List<Pie>(),
+                SearchCategory = null,
+                Categories = selectListItems,
+                SearchQuery = string.Empty
+            });
 
         }
 
