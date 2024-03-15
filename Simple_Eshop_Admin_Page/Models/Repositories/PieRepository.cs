@@ -133,5 +133,21 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
 
             return await pies.AsNoTracking().ToListAsync();
         }
+
+        public async Task<IEnumerable<Pie>> SearchPies(string searchQuery, int? categoryId)
+        {
+            var category = await _bethanysPieShopDbContext.Categories
+                            .Include(p => p.Pies)
+                            .AsNoTracking()
+                            .FirstOrDefaultAsync(c => c.CategoryId == categoryId);
+
+            var pies = await _bethanysPieShopDbContext.Pies
+                            .Include(c => c.CategoryId == category.CategoryId)
+                            .AsNoTracking()
+                            .FirstOrDefaultAsync(p => p.Name == searchQuery.ToLower());
+
+            return await 
+
+        }
     }
 }
