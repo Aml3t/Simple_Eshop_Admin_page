@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Simple_Eshop_Admin_Page.Models.Repositories
 {
@@ -136,17 +137,34 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
 
         public async Task<IEnumerable<Pie>> SearchPies(string searchQuery, int? categoryId)
         {
-            var category = await _bethanysPieShopDbContext.Categories
-                            .Include(p => p.Pies)
-                            .AsNoTracking()
-                            .FirstOrDefaultAsync(c => c.CategoryId == categoryId);
 
-            var pies = await _bethanysPieShopDbContext.Pies
-                            .Include(c => c.CategoryId == category.CategoryId)
-                            .AsNoTracking()
-                            .FirstOrDefaultAsync(p => p.Name == searchQuery.ToLower());
+            var pies = from p in _bethanysPieShopDbContext.Pies
+                       select p;
 
-            return await 
+            if (!searchQuery.IsNullOrEmpty())
+            {
+                pies = pies.Where(s => s.Name.Contains(searchQuery) ||
+                s.ShortDescription.Contains(searchQuery) ||
+                s.LongDescription.Contains(searchQuery));
+            }
+
+
+            //if (categoryId == null)
+            //{
+            //    categoryId = 0;
+            //}
+
+            //var category = await _bethanysPieShopDbContext.Categories
+            //                .Include(p => p.Pies)
+            //                .AsNoTracking()
+            //                .FirstOrDefaultAsync(c => c.CategoryId == categoryId);
+
+            //var pies = await _bethanysPieShopDbContext.Pies
+            //                .Include(c => c.CategoryId == category.CategoryId)
+            //                .AsNoTracking()
+            //                .FirstOrDefaultAsync(p => p.Name == searchQuery.ToLower());
+
+            //return await pies
 
         }
     }
