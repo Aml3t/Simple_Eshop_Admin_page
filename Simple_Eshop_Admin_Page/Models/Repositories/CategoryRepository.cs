@@ -34,12 +34,16 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
             return await _bethanysPieShopDbContext.SaveChangesAsync();
         }
 
-        public IEnumerable<Category> GetAllCategories()
+        public async IEnumerable<Category> GetAllCategories()
         {
             List<Category> allCategories = null;
 
             if (!_memoryCache.TryGetValue(AllCategoriesCacheName, out allCategories))
             {
+                allCategories = await _bethanysPieShopDbContext.Categories
+                    .AsNoTracking()
+                    .OrderBy(c => c.CategoryId)
+                    .ToListAsync();
 
             }
             
