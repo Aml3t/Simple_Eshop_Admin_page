@@ -16,3 +16,40 @@
     </div>
     <input type="submit" value="Filter" class="btn btn-primary" />
 </form>
+
+@if (!Model.Pies.Any())
+{
+    <p>No results</p>
+}
+else
+{
+    <table class="table table-condensed table-bordered">
+        <tr>
+
+            <th>
+                Id
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Price
+            </th>
+            <th>Actions</th>
+        </tr>
+        @foreach (var pie in Model.Pies)
+        {
+
+            <tr>
+                <td>@pie.PieId</td>
+                <td>@pie.Name</td>
+                <td>@pie.Price</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@pie.PieId">Details</a>
+                    <a asp-action="Edit" asp-route-id="@pie.PieId">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@pie.PieId">Delete</a>
+                </td>
+            </tr>
+        }
+    </table>
+}
