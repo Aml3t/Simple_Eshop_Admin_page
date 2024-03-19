@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using System.Data;
 
 namespace Simple_Eshop_Admin_Page.Models.Repositories
@@ -7,6 +8,9 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
     public class CategoryRepository : ICategoryRepository
     {
         private readonly BethanysPieShopDbContext _bethanysPieShopDbContext;
+        
+        private IMemoryCache _memoryCache;
+        private const string AllCategoriesCacheName = "AllCategories";
 
         public CategoryRepository(BethanysPieShopDbContext bethanysPieShopDbContext)
         {
