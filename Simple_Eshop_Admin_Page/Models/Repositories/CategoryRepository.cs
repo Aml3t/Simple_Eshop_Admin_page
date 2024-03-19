@@ -8,13 +8,15 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
     public class CategoryRepository : ICategoryRepository
     {
         private readonly BethanysPieShopDbContext _bethanysPieShopDbContext;
-        
+
         private IMemoryCache _memoryCache;
         private const string AllCategoriesCacheName = "AllCategories";
 
-        public CategoryRepository(BethanysPieShopDbContext bethanysPieShopDbContext)
+        public CategoryRepository(BethanysPieShopDbContext bethanysPieShopDbContext,
+            IMemoryCache memoryCache)
         {
             _bethanysPieShopDbContext = bethanysPieShopDbContext;
+            _memoryCache = memoryCache;
         }
 
         public async Task<int> AddCategoryAsync(Category category)
@@ -34,9 +36,13 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
 
         public IEnumerable<Category> GetAllCategories()
         {
-            return _bethanysPieShopDbContext.Categories
-                .OrderBy(p => p.CategoryId)
-                .AsNoTracking();
+            List<Category> allCategories = null;
+
+            if (!_memoryCache.TryGetValue(AllCategoriesCacheName, out allCategories))
+            {
+
+            }
+            
         }
 
         public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
@@ -71,7 +77,7 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
 
             var categoryToUpdate = await
                 _bethanysPieShopDbContext.Categories.FirstOrDefaultAsync
-                (c=> c.CategoryId == category.CategoryId);
+                (c => c.CategoryId == category.CategoryId);
 
             if (categoryToUpdate != null)
             {
