@@ -44,9 +44,13 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
                     .AsNoTracking()
                     .OrderBy(c => c.CategoryId)
                     .ToListAsync();
+                var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromSeconds(60));
 
+                _memoryCache.Set(AllCategoriesCacheName, allCategories,
+                    cacheEntryOptions);
             }
-            
+            return allCategories;
         }
 
         public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
