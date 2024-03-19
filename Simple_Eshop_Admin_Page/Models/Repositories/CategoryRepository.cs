@@ -36,6 +36,13 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
 
         public async IEnumerable<Category> GetAllCategories()
         {
+            return _bethanysPieShopDbContext.Categories
+                .AsNoTracking()
+                .OrderBy(p => p.CategoryId);
+        }
+
+        public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
+        {
             List<Category> allCategories = null;
 
             if (!_memoryCache.TryGetValue(AllCategoriesCacheName, out allCategories))
@@ -51,16 +58,6 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
                     cacheEntryOptions);
             }
             return allCategories;
-        }
-
-        public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
-        {
-            //throw new Exception("Database down"); Testing the try catch block
-
-            return await _bethanysPieShopDbContext.Categories
-                 .OrderBy(c => c.CategoryId)
-                 .AsNoTracking()
-                 .ToListAsync();
         }
 
         public async Task<Category?> GetCategoryByIdAsync(int id)
