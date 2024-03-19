@@ -1,1 +1,18 @@
 ﻿@model PieSearchViewModel
+
+<h2>Search pies</h2>
+<hr />
+
+<form asp-controller="Pie" asp-action="Search" method="get">
+    <div class="mb-3">
+        <label class="form-label">Category</label>
+        <select asp-for="SearchCategory" asp-items="Model.Categories" class="form-control">
+            <option value="">All</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Search value</label>
+        <input type="text" asp-for="SearchQuery" class="form-control" />
+    </div>
+    <input type="submit" value="Filter" class="btn btn-primary" />
+</form>
