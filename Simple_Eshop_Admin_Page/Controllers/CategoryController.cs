@@ -136,5 +136,23 @@ namespace Simple_Eshop_Admin_Page.Controllers
 
             return View(selectedCategory);
         }
+
+        public async Task<ActionResult> BulkEdit()
+        {
+            List<CategoryBulkEditViewModel> categoryBulkEditViewModels =
+                new List<CategoryBulkEditViewModel>();
+
+            var allCategories = await _categoryRepository.GetAllCategoriesAsync();
+
+            foreach (var category in allCategories)
+            {
+                categoryBulkEditViewModels.Add(new CategoryBulkEditViewModel
+                {
+                    CategoryId = category.CategoryId,
+                    Name = category.Name
+                });
+            }
+            return View(categoryBulkEditViewModels);
+        }
     }
 }
