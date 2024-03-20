@@ -31,7 +31,7 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
 
             _bethanysPieShopDbContext.Categories.Add(category);
 
-            int result =  await _bethanysPieShopDbContext.SaveChangesAsync();
+            int result = await _bethanysPieShopDbContext.SaveChangesAsync();
 
             _memoryCache.Remove(AllCategoriesCacheName);
 
@@ -128,5 +128,24 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
             }
         }
 
+        public async Task<int> UpdateCategoryNamesAsync(List<Category> categories)
+        {
+            foreach (var category in categories)
+            {
+                var categoryToUpdate = await
+                    _bethanysPieShopDbContext.Categories
+                    .FirstOrDefaultAsync(c => c.CategoryId == category.CategoryId);
+
+                if (categoryToUpdate != null)
+                {
+                    categoryToUpdate.Name = category.Name;
+
+                    _bethanysPieShopDbContext.Update(categoryToUpdate);
+                }
+
+
+            }
+
+        }
     }
 }
