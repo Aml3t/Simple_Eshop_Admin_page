@@ -142,10 +142,13 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
 
                     _bethanysPieShopDbContext.Update(categoryToUpdate);
                 }
-
-
             }
 
+            int result = await _bethanysPieShopDbContext.SaveChangesAsync();
+
+            _memoryCache.Remove(AllCategoriesCacheName);
+
+            return result;
         }
     }
 }
