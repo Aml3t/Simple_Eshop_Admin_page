@@ -31,10 +31,14 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
 
             _bethanysPieShopDbContext.Categories.Add(category);
 
-            return await _bethanysPieShopDbContext.SaveChangesAsync();
+            int result =  await _bethanysPieShopDbContext.SaveChangesAsync();
+
+            _memoryCache.Remove(AllCategoriesCacheName);
+
+            return result;
         }
 
-        public async IEnumerable<Category> GetAllCategories()
+        public IEnumerable<Category> GetAllCategories()
         {
             return _bethanysPieShopDbContext.Categories
                 .AsNoTracking()
@@ -43,7 +47,7 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
 
         public async Task<IEnumerable<Category>> GetAllCategoriesAsync()
         {
-            List<Category> allCategories = null;
+            List<Category>? allCategories = null;
 
             if (!_memoryCache.TryGetValue(AllCategoriesCacheName, out allCategories))
             {
