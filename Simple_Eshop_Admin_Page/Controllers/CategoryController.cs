@@ -137,7 +137,7 @@ namespace Simple_Eshop_Admin_Page.Controllers
             return View(selectedCategory);
         }
 
-        public async Task<ActionResult> BulkEdit()
+        public async Task<IActionResult> BulkEdit()
         {
             List<CategoryBulkEditViewModel> categoryBulkEditViewModels =
                 new List<CategoryBulkEditViewModel>();
@@ -153,6 +153,26 @@ namespace Simple_Eshop_Admin_Page.Controllers
                 });
             }
             return View(categoryBulkEditViewModels);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> BulkEdit(List<CategoryBulkEditViewModel>
+            categoryBulkEditViewModels)
+        {
+            List<Category> categories = new List<Category>();
+
+            foreach (var categoryBulkEditViewModel in categoryBulkEditViewModels)
+            {
+                categories.Add(new Category()
+                {
+                    CategoryId = categoryBulkEditViewModel.CategoryId,
+                    Name = categoryBulkEditViewModel.Name
+                });
+            }
+
+            await _categoryRepository.UpdateCategoryNamesAsync(categories);
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
