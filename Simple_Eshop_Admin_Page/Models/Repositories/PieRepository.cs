@@ -44,6 +44,8 @@ namespace Simple_Eshop_Admin_Page.Models.Repositories
 
             if (pieToUpdate != null)
             {
+                _bethanysPieShopDbContext.Entry(pieToUpdate).Property
+                    ("RowVersion").OriginalValue = pieToUpdate.RowVersion;
                 pieToUpdate.CategoryId = pie.CategoryId;
                 pieToUpdate.ShortDescription = pie.ShortDescription;
                 pieToUpdate.LongDescription = pie.LongDescription;
