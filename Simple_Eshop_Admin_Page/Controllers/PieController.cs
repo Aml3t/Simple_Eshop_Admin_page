@@ -6,6 +6,7 @@ using Simple_Eshop_Admin_Page.Models;
 using Simple_Eshop_Admin_Page.Models.Repositories;
 using Simple_Eshop_Admin_Page.Utilities;
 using Simple_Eshop_Admin_Page.ViewModels;
+using System.Data;
 
 namespace Simple_Eshop_Admin_Page.Controllers
 {
@@ -173,23 +174,32 @@ namespace Simple_Eshop_Admin_Page.Controllers
         {
             Pie pieToUpdate = await _pieRepository.GetPieByIdAsync(pie.PieId);
 
-
             try
             {
+                if (pieToUpdate == null)
+                {
+                    ModelState.AddModelError(string.Empty,
+                        "The pie you want to update doesn't exist or was already deleted by someone else.");
+                }
+
                 if (ModelState.IsValid)
                 {
-                    await _pieRepository.UpdatePieAsync(pieEditViewModel.Pie);
+                    await _pieRepository.UpdatePieAsync(pie);
                     return RedirectToAction(nameof(Index));
                 }
+
                 else
                 {
                     return BadRequest();
                 }
             }
-            catch (Exception ex)
+            catch (DBConcurrencyException ex)
             {
-                ModelState.AddModelError("", $"Updating the category failed," +
-                    $"please try again! Error: {ex.Message}");
+                var exceptionPie = ex.Entries.Single();
+                var entityValues = (Pie)exceptionPie.Entity;
+                var databasePie = exceptionPie.GetDatabaseValues();
+
+
             }
 
             var allCategories = await _categoryRepository
@@ -281,10 +291,10 @@ namespace Simple_Eshop_Admin_Page.Controllers
 
                 return View(new PieSearchViewModel()
                 {
-                   Pies = pies,
-                   SearchCategory = searchCategory,
-                   Categories = selectListItems,
-                   SearchQuery = searchQuery
+                    Pies = pies,
+                    SearchCategory = searchCategory,
+                    Categories = selectListItems,
+                    SearchQuery = searchQuery
                 });
             }
 
