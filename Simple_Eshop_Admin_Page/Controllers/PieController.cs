@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Identity.Client;
 using Simple_Eshop_Admin_Page.Models;
@@ -193,58 +194,107 @@ namespace Simple_Eshop_Admin_Page.Controllers
                     return BadRequest();
                 }
             }
-            catch (DBConcurrencyException ex)
+            catch (DbUpdateConcurrencyException ex)
             {
                 var exceptionPie = ex.Entries.Single();
                 var entityValues = (Pie)exceptionPie.Entity;
                 var databasePie = exceptionPie.GetDatabaseValues();
 
+                if (databasePie == null)
+                {
+                    ModelState.AddModelError(string.Empty, "The pie was already deleted by another user.");
+                }
+                else
+                {
+                    var databaseValues = (Pie)databasePie.ToObject();
 
-            }
+                    if (databaseValues.Name != entityValues.Name)
+                    {
+                        ModelState.AddModelError("Pie.Name", $"Current value: {databaseValues.Name}");
+                    }
+                    if (databaseValues.Price != entityValues.Price)
+                    {
+                        ModelState.AddModelError("Pie.Price", $"Current value: {databaseValues.Price:c}");
+                    }
+                    if (databaseValues.ShortDescription != entityValues.ShortDescription)
+                    {
+                        ModelState.AddModelError("Pie.ShortDescription", $"Current value: {databaseValues.ShortDescription}");
+                    }
+                    if (databaseValues.LongDescription != entityValues.LongDescription)
+                    {
+                        ModelState.AddModelError("Pie.LongDescription", $"Current value: {databaseValues.LongDescription}");
+                    }
+                    if (databaseValues.AllergyInformation != entityValues.AllergyInformation)
+                    {
+                        ModelState.AddModelError("Pie.AllergyInformation", $"Current value: {databaseValues.AllergyInformation}");
+                    }
+                    if (databaseValues.ImageThumbnailUrl != entityValues.ImageThumbnailUrl)
+                    {
+                        ModelState.AddModelError("Pie.ImageThumbnailUrl", $"Current value: {databaseValues.ImageThumbnailUrl}");
+                    }
+                    if (databaseValues.ImageUrl != entityValues.ImageUrl)
+                    {
+                        ModelState.AddModelError("Pie.ImageUrl", $"Current value: {databaseValues.ImageUrl}");
+                    }
+                    if (databaseValues.IsPieOfTheWeek != entityValues.IsPieOfTheWeek)
+                    {
+                        ModelState.AddModelError("Pie.IsPieOfTheWeek", $"Current value: {databaseValues.IsPieOfTheWeek}");
+                    }
+                    if (databaseValues.InStock != entityValues.InStock)
+                    {
+                        ModelState.AddModelError("Pie.InStock", $"Current value: {databaseValues.InStock}");
+                    }
+                    if (databaseValues.CategoryId != entityValues.CategoryId)
+                    {
+                        ModelState.AddModelError("Pie.CategoryId", $"Current value: {databaseValues.CategoryId}");
+                    }
 
-            var allCategories = await _categoryRepository
+
+                }
+
+                var allCategories = await _categoryRepository
                 .GetAllCategoriesAsync();
 
-            IEnumerable<SelectListItem> selectListItems = new SelectList
-                (allCategories, "CategoryId", "Name", null);
+                IEnumerable<SelectListItem> selectListItems = new SelectList
+                    (allCategories, "CategoryId", "Name", null);
 
-            pieEditViewModel.Categories = selectListItems;
+                pieEditViewModel.Categories = selectListItems;
 
-            return View(pieEditViewModel);
+                return View(pieEditViewModel);
 
-        }
-
-        public async Task<IActionResult> Delete(int id)
-        {
-            var selectedPie = await _pieRepository.GetPieByIdAsync(id);
-
-            return View(selectedPie);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Delete(int? pieId)
-        {
-            if (pieId == null)
-            {
-                ViewData["ErrorMessage"] = "Deleting the pie failed, invalid ID!";
-                return View();
             }
 
-            try
+            public async Task<IActionResult> Delete(int id)
             {
-                await _pieRepository.DeletePieAsync(pieId.Value);
-                TempData["PieDeleted"] = "Pie deleted successfully!";
-                return RedirectToAction(nameof(Index));
-            }
-            catch (Exception ex)
-            {
-                ViewData["ErrorMessage"] = $"Deleting the pie failed," +
-                    $" please try again! Error: {ex.Message}";
+                var selectedPie = await _pieRepository.GetPieByIdAsync(id);
+
+                return View(selectedPie);
             }
 
-            var selectedPie = await _pieRepository.GetPieByIdAsync(pieId.Value);
-            return View(selectedPie);
-        }
+            [HttpPost]
+            public async Task<IActionResult> Delete(int? pieId)
+            {
+                if (pieId == null)
+                {
+                    ViewData["ErrorMessage"] = "Deleting the pie failed, invalid ID!";
+                    return View();
+                }
+
+                try
+                {
+                    await _pieRepository.DeletePieAsync(pieId.Value);
+                    TempData["PieDeleted"] = "Pie deleted successfully!";
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    ViewData["ErrorMessage"] = $"Deleting the pie failed," +
+                        $" please try again! Error: {ex.Message}";
+                }
+
+                var selectedPie = await _pieRepository.GetPieByIdAsync(pieId.Value);
+                return View(selectedPie);
+            }
 
         private int pageSize = 5;
         public async Task<IActionResult> IndexPaging(int? pageNumber)
