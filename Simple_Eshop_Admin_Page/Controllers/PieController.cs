@@ -249,52 +249,61 @@ namespace Simple_Eshop_Admin_Page.Controllers
                         ModelState.AddModelError("Pie.CategoryId", $"Current value: {databaseValues.CategoryId}");
                     }
 
+                    ModelState.AddModelError(string.Empty,
+                        "The pie was modified already by another user." +
+                        " The database values are now shown. Hit Save again to store these values.");
+                    
+                    pieToUpdate.RowVersion = databaseValues.RowVersion;
 
+                    ModelState.Remove("Pie.RowVersion");
                 }
-
-                var allCategories = await _categoryRepository
-                .GetAllCategoriesAsync();
-
-                IEnumerable<SelectListItem> selectListItems = new SelectList
-                    (allCategories, "CategoryId", "Name", null);
-
-                pieEditViewModel.Categories = selectListItems;
-
-                return View(pieEditViewModel);
-
             }
-
-            public async Task<IActionResult> Delete(int id)
+            catch (Exception ex)
             {
-                var selectedPie = await _pieRepository.GetPieByIdAsync(id);
-
-                return View(selectedPie);
+                ModelState.AddModelError("", $"Updating the category failed, please try again! Error: {ex.Message}");
             }
 
-            [HttpPost]
-            public async Task<IActionResult> Delete(int? pieId)
+            var allCategories = await _categoryRepository.GetAllCategoriesAsync();
+
+            IEnumerable<SelectListItem> selectListItems = new SelectList(allCategories, "CategoryId", "Name", null);
+
+            PieEditViewModel pieEditViewModel = new() { Categories = selectListItems, Pie = pieToUpdate };
+
+            return View(pieEditViewModel);
+        }
+
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var selectedPie = await _pieRepository.GetPieByIdAsync(id);
+
+            return View(selectedPie);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int? pieId)
+        {
+            if (pieId == null)
             {
-                if (pieId == null)
-                {
-                    ViewData["ErrorMessage"] = "Deleting the pie failed, invalid ID!";
-                    return View();
-                }
-
-                try
-                {
-                    await _pieRepository.DeletePieAsync(pieId.Value);
-                    TempData["PieDeleted"] = "Pie deleted successfully!";
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (Exception ex)
-                {
-                    ViewData["ErrorMessage"] = $"Deleting the pie failed," +
-                        $" please try again! Error: {ex.Message}";
-                }
-
-                var selectedPie = await _pieRepository.GetPieByIdAsync(pieId.Value);
-                return View(selectedPie);
+                ViewData["ErrorMessage"] = "Deleting the pie failed, invalid ID!";
+                return View();
             }
+
+            try
+            {
+                await _pieRepository.DeletePieAsync(pieId.Value);
+                TempData["PieDeleted"] = "Pie deleted successfully!";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ViewData["ErrorMessage"] = $"Deleting the pie failed," +
+                    $" please try again! Error: {ex.Message}";
+            }
+
+            var selectedPie = await _pieRepository.GetPieByIdAsync(pieId.Value);
+            return View(selectedPie);
+        }
 
         private int pageSize = 5;
         public async Task<IActionResult> IndexPaging(int? pageNumber)
